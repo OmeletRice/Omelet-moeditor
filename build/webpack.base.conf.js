@@ -74,5 +74,8 @@ module.exports = {
         }
       }
     ]
+  },
+  externals: {
+    tinymce: 'tinymce'
   }
 }
