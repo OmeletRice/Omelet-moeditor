@@ -1,23 +1,17 @@
 <template>
   <div id="moEditor">
-    <mo-iframe-box :src="src"></mo-iframe-box>
+    <mo-content-area></mo-content-area>
   </div>
 </template>
 
 <script>
-import MoIframeBox from 'basic/iframe-box/iframe-box'
+import MoContentArea from './areas/content'
 import './theme-default/lib/index.css'
 export default {
   name: 'MoEditor',
 
   components: {
-    MoIframeBox
-  },
-
-  data () {
-    return {
-      src: 'static/mock-page/trans/index.html'
-    }
+    MoContentArea
   }
 }
 </script>

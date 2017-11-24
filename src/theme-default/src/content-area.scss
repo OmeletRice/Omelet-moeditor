@@ -1,0 +1,9 @@
+@import 'common/var';
+@import 'mixins/mixins';
+
+@include b(content-area) {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
