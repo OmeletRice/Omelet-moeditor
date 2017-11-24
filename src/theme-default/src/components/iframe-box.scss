@@ -1,0 +1,14 @@
+@import 'common/var';
+@import 'mixins/mixins';
+
+@include b(iframe-box) {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  @include e(inner) {
+    border: 0;
+    outline: 0;
+  }
+}
