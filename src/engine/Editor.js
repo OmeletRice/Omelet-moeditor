@@ -6,7 +6,7 @@ import MoEditor from '@/editor'
 
 const EditorVue = Vue.extend(MoEditor)
 
-const Editor = (el, options) => {
+const Editor = function(el, options) {
   if (!Editor.installed) {
     Editor.install()
   }
@@ -18,7 +18,13 @@ const Editor = (el, options) => {
 
   self.vm = new EditorVue({
     data: {
-      data: self.data
+      data: self.data,
+      state: {
+        selectNode: {
+          event: null,
+          el: null
+        }
+      }
     },
     editor: self
   })
@@ -26,9 +32,15 @@ const Editor = (el, options) => {
   self.vm.$mount(el)
 }
 
+Editor.prototype = {
+  get state() {
+    return this.vm.state
+  }
+}
+
 // Editor.baseUrl = './'
 Editor.installed = false
-Editor.install = () => {
+Editor.install = function() {
   Vue.config.productionTip = false
 
   // Vue plugin

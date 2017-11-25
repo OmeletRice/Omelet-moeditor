@@ -1,4 +1,4 @@
-import Editor from './enigne/Editor.js'
+import Editor from './engine/Editor.js'
 
 window.MoEditor = Editor
 
