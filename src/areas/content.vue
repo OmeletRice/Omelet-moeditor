@@ -13,7 +13,7 @@
 <script>
 import MoFloatingMenu from '@/components/floating-menu/floating-menu'
 const INSERT_SCRIPT = `
-  document.body.ontouchstart = (evt) => {
+  document.body.onclick = (evt) => {
     window.parent.editor.state.selectNode.event = evt
     window.parent.editor.state.selectNode.el = evt.target
   }

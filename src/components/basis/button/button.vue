@@ -48,7 +48,9 @@ export default {
   },
 
   methods: {
-    handleClick() {}
+    handleClick(evt) {
+      this.$emit('click', evt)
+    }
   }
 }
 </script>

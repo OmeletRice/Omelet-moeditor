@@ -1,6 +1,8 @@
 import Editor from './lib.js'
 
-let options = {}
+let options = {
+  lang: 'en_US'
+}
 
 /* eslint-disable no-new */
 const editor = new Editor('#app', options)

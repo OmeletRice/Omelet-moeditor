@@ -3,7 +3,10 @@
     :class="[
       { 'is-full': isFull }
     ]">
-    <mo-button size="large" round>button</mo-button>
+    <mo-button 
+      size="large" 
+      round
+      @click="handleEdit">{{$t('mo.floatingMenu.btn.edit')}}</mo-button>
   </div>  
 </template>
 
@@ -15,6 +18,12 @@ export default {
     isFull: {
       type: Boolean,
       default: false
+    }
+  },
+
+  methods: {
+    handleEdit(evt) {
+      console.log(evt)
     }
   }
 }
