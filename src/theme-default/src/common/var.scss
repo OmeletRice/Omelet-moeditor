@@ -4,6 +4,7 @@ $--color-white: #fff;
 $--color-black: #000;
 
 $--color-primary: #3498DB !default;
+$--color-danger: #ef4f4f !default;
 
 $--color-text-primary: #2d2f33 !default;
 $--color-text-regular: #5a5e66 !default;
@@ -16,3 +17,17 @@ $--font-path: 'fonts' !default;
 $--font-size-small: 14px !default;
 $--font-size-base: 18px !default;
 $--font-size-large: 20px !default;
+
+/* Button
+-------------------------- */
+// default
+$--button-default-color: #656b79;
+$--button-default-background-color: #f6f8fa;
+$--button-default-box-shadow: 0 0 1px #b8bbbf;
+$--button-default-plain-color: #5a5a5a;
+// primary
+$--button-primary-color: $--color-white;
+$--button-primary-background-color: $--color-primary;
+// danger
+$--button-danger-color: $--color-white;
+$--button-danger-background-color: $--color-danger;

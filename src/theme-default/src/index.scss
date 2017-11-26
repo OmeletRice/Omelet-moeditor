@@ -3,9 +3,10 @@
 @import "reset.scss";
 
 // component
-@import "components/moeditor.scss";
 @import "components/iframe-box.scss";
 @import "components/indicator-box.scss";
+@import "components/button.scss";
 
 // areas
+@import "moeditor.scss";
 @import "content-area.scss";

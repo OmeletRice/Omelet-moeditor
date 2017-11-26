@@ -3,6 +3,7 @@
  */
 import Vue from 'vue'
 import MoEditor from '@/editor'
+import Basis from '@/components/basis'
 
 const EditorVue = Vue.extend(MoEditor)
 
@@ -44,6 +45,8 @@ Editor.install = function() {
   Vue.config.productionTip = false
 
   // Vue plugin
+  // Install all vue components
+  Basis.install()
 
   // Add $editor property to all editor components
   Object.defineProperty(Vue.prototype, '$editor', {

@@ -14,9 +14,12 @@
 </template>
 
 <script>
-// import { on } from '../utils/dom'
 import throttle from 'throttle-debounce/throttle'
-import { getIframeBodyHeight, appendScriptToHtmlBody, getIframeScrollLength } from '../utils/iframe'
+import {
+  getIframeBodyHeight,
+  appendScriptToHtmlBody,
+  getIframeScrollLength,
+  getSelectedElPosition } from '../utils/iframe'
 export default {
   name: 'MoIframeBox',
 
@@ -54,6 +57,17 @@ export default {
     }
   },
 
+  watch: {
+    '$editor.state.selectNode': {
+      deep: true,
+      handler(val) {
+        if (!val.el) return
+        const position = getSelectedElPosition(val.el, this.$refs.iframewarp)
+        this.$emit('position', position)
+      }
+    }
+  },
+
   methods: {
     handleIframeLoad(e) {
       const _iframe = this.$refs.iframewarp
@@ -62,12 +76,6 @@ export default {
       appendScriptToHtmlBody(_iframe, this.scriptText)
     },
     handleScroll(e) {
-      this.emitRange()
-    },
-    getIframeRect() {
-      return this.$refs.iframewarp.getBoundingClientRect()
-    },
-    emitRange() {
       const ret = getIframeScrollLength(this.$refs.iframewarp)
       this.$emit('scroll', ret)
     }
@@ -77,23 +85,6 @@ export default {
     this.throttleHandleScroll = throttle(this.throttle, val => {
       this.handleScroll(val)
     })
-  },
-
-  watch: {
-    '$editor.state.selectNode': {
-      deep: true,
-      handler(val) {
-        const { el } = val
-        const top = el.getBoundingClientRect().top + this.getIframeRect().top
-        const left = el.getBoundingClientRect().left + this.getIframeRect().left
-        this.$emit('position', {
-          top: top,
-          left: left,
-          width: el.getBoundingClientRect().width - 4,
-          height: el.getBoundingClientRect().height - 2
-        })
-      }
-    }
   }
 }
 </script>

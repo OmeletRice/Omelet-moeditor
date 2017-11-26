@@ -4,47 +4,48 @@
     <mo-iframe-box 
       :src="src" 
       :script-text="insertScript"
-      @scroll="handleRange" 
+      @scroll="handleScroll" 
       @position="handlePosition"></mo-iframe-box>
+    <mo-floating-menu></mo-floating-menu>
   </div>
 </template>
 
 <script>
-import MoIframeBox from 'basic/iframe-box/iframe-box'
-import MoIndicatorBox from 'basic/indicator-box/indicator-box'
+import MoFloatingMenu from '@/components/floating-menu/floating-menu'
+const INSERT_SCRIPT = `
+  document.body.ontouchstart = (evt) => {
+    window.parent.editor.state.selectNode.event = evt
+    window.parent.editor.state.selectNode.el = evt.target
+  }
+`
 export default {
   name: 'MoContentArea',
 
   components: {
-    MoIframeBox,
-    MoIndicatorBox
+    MoFloatingMenu
   },
 
   data () {
     return {
       src: 'static/mock-page/trans/index.html',
       position: null,
-      insertScript: `
-        document.body.ontouchstart = (evt) => {
-          window.parent.editor.state.selectNode.event = evt
-          window.parent.editor.state.selectNode.el = evt.target
-        }
-      `
+      insertScript: INSERT_SCRIPT
     }
   },
 
   methods: {
-    handleRange(range) {
-      // console.log(range, this.$editor)
-      const selectNodeEl = this.$editor.state.selectNode.el
-      if (!selectNodeEl) return
-      const top = selectNodeEl.getBoundingClientRect().top + range.vertical
-      const left = selectNodeEl.getBoundingClientRect().left + range.horizontal
-      this.position = {
-        top: top,
-        left: left,
-        width: selectNodeEl.getBoundingClientRect().width - 4,
-        height: selectNodeEl.getBoundingClientRect().height - 2
+    handleScroll(scrollLen) {
+      const selectedNodeEl = this.$editor.state.selectNode.el
+      if (!selectedNodeEl) return
+      this.position = this.updateIndicatorBoxPostion(selectedNodeEl, scrollLen)
+    },
+    updateIndicatorBoxPostion(el, scrollLength) {
+      const elRect = el.getBoundingClientRect()
+      return {
+        top: elRect.top + scrollLength.vertical,
+        left: elRect.left + scrollLength.horizontal,
+        width: elRect.width - 4, // border-width / 2
+        height: elRect.height - 2 // border-width
       }
     },
     handlePosition(position) {
