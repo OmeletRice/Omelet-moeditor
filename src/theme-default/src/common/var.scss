@@ -18,6 +18,10 @@ $--font-size-small: 14px !default;
 $--font-size-base: 18px !default;
 $--font-size-large: 20px !default;
 
+/*
+-------------------------- */
+$--z-index-normal: 100;
+
 /* Button
 -------------------------- */
 // default
@@ -31,3 +35,15 @@ $--button-primary-background-color: $--color-primary;
 // danger
 $--button-danger-color: $--color-white;
 $--button-danger-background-color: $--color-danger;
+
+/* Floating-menu
+--------------------------- */
+$--floating-menu--float-height: 45px !default;
+$--floating-menu--width: 50%;
+
+
+/* Header
+-------------------------- */
+$--header-color: $--color-text-regular;
+$--header-background-color: #eceff1 !default;
+$--header-height: 45px !default;

@@ -6,17 +6,31 @@
       :script-text="insertScript"
       @scroll="handleScroll" 
       @position="handlePosition"></mo-iframe-box>
-    <mo-floating-menu></mo-floating-menu>
+    <mo-floating-menu v-show="showMenu" :is-mask="maskMenu"></mo-floating-menu>
   </div>
 </template>
 
 <script>
 import MoFloatingMenu from '@/components/floating-menu/floating-menu'
+// const INSERT_SCRIPT = `
+//   document.body.ontouchend = (evt) => {
+//     window.parent.editor.state.selectNode.event = evt
+//     window.parent.editor.state.selectNode.el = evt.target
+//   }
+// `
 const INSERT_SCRIPT = `
-  document.body.onclick = (evt) => {
-    window.parent.editor.state.selectNode.event = evt
-    window.parent.editor.state.selectNode.el = evt.target
+  if (document.addEventListener) {
+    document.addEventListener('touchend', function(evt) {
+      window.parent.editor.state.selectNode.event = evt
+      window.parent.editor.state.selectNode.el = evt.target
+    }, false) 
+  } else {
+    document.attachEvent('ontouchend', function(evt) {
+      window.parent.editor.state.selectNode.event = evt
+      window.parent.editor.state.selectNode.el = evt.target
+    })
   }
+  
 `
 export default {
   name: 'MoContentArea',
@@ -29,7 +43,10 @@ export default {
     return {
       src: 'static/mock-page/trans/index.html',
       position: null,
-      insertScript: INSERT_SCRIPT
+      insertScript: INSERT_SCRIPT,
+      showMenu: false,
+      maskMenu: false,
+      timeout: null
     }
   },
 
@@ -40,16 +57,25 @@ export default {
       this.position = this.updateIndicatorBoxPostion(selectedNodeEl, scrollLen)
     },
     updateIndicatorBoxPostion(el, scrollLength) {
+      this.handleMaksMenu()
       const elRect = el.getBoundingClientRect()
       return {
         top: elRect.top + scrollLength.vertical,
         left: elRect.left + scrollLength.horizontal,
-        width: elRect.width - 4, // border-width / 2
-        height: elRect.height - 2 // border-width
+        width: elRect.width,
+        height: elRect.height
       }
     },
     handlePosition(position) {
+      this.showMenu = true
       this.position = position
+    },
+    handleMaksMenu() {
+      this.maskMenu = true
+      if (this.timeout !== null) clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.maskMenu = false
+      }, 500)
     }
   }
 }

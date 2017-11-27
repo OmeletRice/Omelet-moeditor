@@ -1,3 +1,5 @@
 export default {
-  'mo.floatingMenu.btn.edit': 'Edit'
+  'mo.nav.btn.back': 'Back',
+  'mo.floatingMenu.btn.edit': 'Edit',
+  'mo.selectbox.title': 'Select Block'
 }

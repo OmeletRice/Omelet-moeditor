@@ -2,11 +2,13 @@ import Vue from 'vue'
 import MoButton from './button/button'
 import MoIframeBox from './iframe-box/iframe-box'
 import MoIndicatorBox from './indicator-box/indicator-box'
+import MoHeader from './header/header'
 
 const components = [
   MoButton,
   MoIframeBox,
-  MoIndicatorBox
+  MoIndicatorBox,
+  MoHeader
 ]
 
 const install = function () {

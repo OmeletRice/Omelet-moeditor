@@ -72,7 +72,7 @@ export default {
     handleIframeLoad(e) {
       const _iframe = this.$refs.iframewarp
       const contentHeight = getIframeBodyHeight(_iframe)
-      if (contentHeight) this.$refs.iframewarp.height = contentHeight
+      if (contentHeight) this.$refs.iframewarp.height = contentHeight + 100 // page bottom
       appendScriptToHtmlBody(_iframe, this.scriptText)
     },
     handleScroll(e) {

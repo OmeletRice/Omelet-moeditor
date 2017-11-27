@@ -1,0 +1,63 @@
+@import 'common/var';
+@import 'mixins/mixins';
+@import 'mixins/utils';
+
+@include b(header) {
+  align-items: center;
+  background-color: $--header-background-color;
+  box-sizing: border-box;
+  color: $--header-color;
+  display: flex;
+  font-size: 14px;
+  height: $--header-height;
+  line-height: 1;
+  padding: 0 10px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+
+  .mo-button {
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    color: inherit;
+    display: inline-block;
+    padding: 0;
+    font-size: inherit;
+
+    &::after {
+      content: none;
+    }
+  }
+
+  @include when(fixed) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: $--z-index-normal;
+  }
+}
+
+@include b(header-button) {
+  flex: .5;
+
+  &> a {
+    color: inherit;
+  }
+
+  @include when(left) {
+    text-align: left
+  }
+
+  @include when(right) {
+    text-align: right
+  }
+}
+
+@include b(header-title) {
+  @include utils-ellipsis;
+  font-size: inherit;
+  font-weight: normal;
+  flex: 1;
+}

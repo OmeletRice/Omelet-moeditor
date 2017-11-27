@@ -4,12 +4,12 @@
 </template>
 
 <script>
+import tinymce from 'tinymce'
 const TINYMCE_TOOLBAR = ['undo', 'redo', 'bold', 'italic', 'underline', 'fontsizeselect', 'forecolor', 'styleselect', 'removeformat']
 const TINTMCE_BASEURL = 'static/tinymce'
 // unused
 // plugins: ['autosave', 'lists', 'autolink']
 // toolbar: ['link', 'unlink', 'image', 'bullist', 'numlist']
-import tinymce from 'tinymce'
 export default {
   name: 'MoTinymceWrap',
 
@@ -37,6 +37,13 @@ export default {
   },
 
   methods: {
+    parent(vm) {
+      let result = vm.$parent
+      while (!result.editorVm) {
+        result = result.$parent
+      }
+      return result
+    },
     getContent() {
       if (!this.editor) return ''
       return this.editor.getContent()
@@ -45,7 +52,7 @@ export default {
       const self = this
       let customOptions = this.options
       if (!customOptions) customOptions = {}
-      
+
       if (customOptions.baseURL) {
         tinymce.baseURL = customOptions.baseURL || TINTMCE_BASEURL
       }
@@ -55,7 +62,7 @@ export default {
       let options = {
         target: this.$refs.tinymcewrap,
         theme: 'mobile',
-        // language: 
+        // language:
         branding: false,
         resize: true,
         toolbar: toolbar
@@ -67,8 +74,10 @@ export default {
           console.log('change')
         })
         editor.on('init', (e) => {
-          console.log('init', e)
-          this.editor = this
+          self.editor = this
+          if (self.parent(self)) {
+            self.parent(self).editorVm = this
+          }
         })
       }
 
@@ -80,6 +89,7 @@ export default {
   mounted() {
     // compa: ie suppore ?
     this.$refs.tinymcewrap.innerHTML = this.content
+    this.createTinymce()
   },
 
   beforeDestroy() {

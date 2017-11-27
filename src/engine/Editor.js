@@ -3,11 +3,40 @@
  */
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+import VueLazyload from 'vue-lazyload'
+// import VueRouter from 'vue-router'
+
 import MoEditor from '@/editor'
 import Basis from '@/components/basis'
+// import routes from './router'
 import messages from './i18n/index.js'
 
 const EditorVue = Vue.extend(MoEditor)
+
+// router
+// const router = new VueRouter({
+//   base: __dirname,
+//   routes
+// })
+
+// let indexScrollTop = 0
+// router.beforeEach((route, redirect, next) => {
+//   if (route.path !== '/') {
+//     indexScrollTop = document.body.scrollTop
+//   }
+//   document.title = route.meta.title || document.title
+//   next()
+// })
+
+// router.afterEach(route => {
+//   if (route.path !== '/') {
+//     document.body.scrollTop = 0
+//   } else {
+//     Vue.nextTick(() => {
+//       document.body.scrollTop = indexScrollTop
+//     })
+//   }
+// })
 
 const Editor = function(el, options) {
   if (!Editor.installed) {
@@ -26,9 +55,11 @@ const Editor = function(el, options) {
         selectNode: {
           event: null,
           el: null
-        }
+        },
+        showSelectBox: false
       }
     },
+    // router,
     i18n: new VueI18n({
       locale: self.options.lang,
       messages: messages
@@ -50,8 +81,23 @@ Editor.installed = false
 Editor.install = function() {
   Vue.config.productionTip = false
 
+  // fastclick
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.FastClick) window.FastClick.attach(document.body)
+  }, false)
+
   // Vue plugin
   Vue.use(VueI18n)
+  Vue.use(VueLazyload, {
+    preLoad: 1.5,
+    // error: Editor.baseUrl + '/lazy/error.png',
+    // loading: Editor.baseUrl + '/lazy/loading.gif',
+    // listenEvents: ['touchmove'],
+    attempt: 1,
+    lazyComponent: true
+  })
+  // Vue.use(VueRouter)
+
   // Install all vue components
   Basis.install()
 

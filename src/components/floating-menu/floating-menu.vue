@@ -1,13 +1,19 @@
 <template>
-  <div class="mo-floating-menu"
-    :class="[
-      { 'is-full': isFull }
-    ]">
-    <mo-button 
-      size="large" 
-      round
-      @click="handleEdit">{{$t('mo.floatingMenu.btn.edit')}}</mo-button>
-  </div>  
+  <transition name="mo-slide-in-out" enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
+    <div class="mo-floating-menu"
+      :class="[
+        { 'is-full': isFull,
+          'is-mask': isMask }
+      ]">
+      <mo-button 
+        size="large" 
+        type="primary"
+        round
+        @click="handleEdit">
+        {{$t('mo.floatingMenu.btn.edit')}}
+      </mo-button>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -18,27 +24,18 @@ export default {
     isFull: {
       type: Boolean,
       default: false
+    },
+    isMask: {
+      type: Boolean,
+      default: false
     }
   },
 
   methods: {
     handleEdit(evt) {
-      console.log(evt)
+      if (this.isMask) return
+      this.$editor.state.showSelectBox = true
     }
   }
 }
 </script>
-
-<style>
-.mo-floating-menu {
-  position: absolute;
-  /* $--floating-menu--float-height */
-  bottom: 45px;
-  /* $--floating-menu--width */
-  width: 50%;
-  left: 50%;
-  margin-left: -25%;
-  text-align: center;
-  z-index: 50;
-}
-</style>

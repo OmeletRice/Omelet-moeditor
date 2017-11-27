@@ -54,8 +54,8 @@ export function getSelectedElPosition(el, iframe) {
   const iframeRect = iframe.getBoundingClientRect()
   ret.top = elRect.top + iframeRect.top
   ret.left = elRect.left + iframeRect.left
-  ret.width = elRect.width - 4 // border-width / 2
-  ret.height = elRect.height - 2 // border-width
+  ret.width = elRect.width
+  ret.height = elRect.height
   return ret
 }
 
@@ -70,7 +70,7 @@ export function getSelectedElPosition(el, iframe) {
 //   return {
 //     top: elRect.top + scrollLength.vertical,
 //     left: elRect.left + scrollLength.horizontal,
-//     width: elRect.width - 4, // border-width / 2
-//     height: elRect.height - 2 // border-width
+//     width: elRect.width
+//     height: elRect.height
 //   }
 // }

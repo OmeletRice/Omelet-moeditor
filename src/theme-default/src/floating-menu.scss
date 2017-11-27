@@ -1,0 +1,26 @@
+@import 'common/var';
+@import 'mixins/mixins';
+
+@include b(floating-menu) {
+  position: absolute;
+  bottom: $--floating-menu--float-height;
+  width: $--floating-menu--width;
+  left: $--floating-menu--width;
+  margin-left: -25%;
+  text-align: center;
+  z-index: 50;
+  opacity: 1;
+  animation-duration: .25s;
+  animation-timing-function: cubic-bezier(0.15, 1.04, 0.77, 1.26);
+
+  & .mo-button {
+    color: $--color-white;
+    box-shadow: 0 3px 6px 1px rgba(31,91,131,.7);
+  }
+
+  @include when(full) {}
+
+  @include when(mask) {
+    opacity: .5;
+  }
+}
