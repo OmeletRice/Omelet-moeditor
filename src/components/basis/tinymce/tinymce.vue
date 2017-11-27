@@ -68,15 +68,16 @@ export default {
         toolbar: toolbar
       }
 
-      let setup = (editor) => {
-        editor.on('Change', (e) => {
+      let setup = function(editor) {
+        editor.on('Change', function(e) {
           self.$emit('change')
           console.log('change')
         })
-        editor.on('init', (e) => {
+        editor.on('init', function(e) {
           self.editor = this
-          if (self.parent(self)) {
-            self.parent(self).editorVm = this
+          const parent = self.parent(self)
+          if (parent) {
+            parent.editorVm = self
           }
         })
       }
@@ -94,7 +95,9 @@ export default {
 
   beforeDestroy() {
     tinymce.execCommand('mceRemoveEditor', false)
-    this.editor.destroy()
+    if (this.editor) {
+      this.editor.destroy()
+    }
   }
 }
 </script>

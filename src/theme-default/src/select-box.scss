@@ -19,14 +19,15 @@
     height: 100%;
     text-align: center;
     overflow-y: scroll;
+    background-color: #ffffff;
   }
 }
 
 @include b(select-box-item) {
   margin: 20px auto;
-  width: 80%;
-  height: 180px;
-  overflow: hidden;
+  width: 90%;
+  height: 100%;
+  // overflow: hidden;
   box-shadow: 0 1px 5px 1px #acacac;
   border-radius: 5px;
   
@@ -37,8 +38,8 @@
   }
 
   @include e(lazy-wrap) {
-    margin: 20px auto;
-    width: 100%;
-    height: 180px;
+    // margin: 20px auto;
+    // width: 100%;
+    // height: 180px;
   }
 }

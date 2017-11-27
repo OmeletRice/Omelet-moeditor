@@ -13,6 +13,7 @@
 
 <script>
 import MoTinymceWrap from 'basis/tinymce/tinymce'
+// const TINYMCE_BTN_CLASS_TAG = 'tinymce-mobile-mask-tap-icon'
 export default {
   name: 'MoSelectBoxItem',
 
@@ -44,8 +45,10 @@ export default {
 
   methods: {
     handleTouchStart(evt) {
-      console.log(evt.target)
-      this.isTouch = true
+      if (evt.target) {
+        this.isTouch = true
+      }
+      console.log(this.editorVm.editor)
     },
     handleTouchEnd(evt) {
       this.isTouch = false
