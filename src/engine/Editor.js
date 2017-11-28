@@ -56,7 +56,7 @@ const Editor = function(el, options) {
           event: null,
           el: null
         },
-        showSelectBox: false
+        showBlockSelect: false
       }
     },
     // router,

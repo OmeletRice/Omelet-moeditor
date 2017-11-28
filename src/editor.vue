@@ -6,21 +6,26 @@
     </keep-alive> -->
     <!-- </transition> -->
     <mo-content-area></mo-content-area>
-    <mo-select-box v-show="$editor ? $editor.state.showSelectBox : false"></mo-select-box>
+    <mo-select-box v-if="showBlockSelect"></mo-select-box>
   </div>
 </template>
 
 <script>
 import MoContentArea from './areas/content'
-import MoSelectBox from './areas/select-box'
+// import MoBlockSelect from './areas/block-select'
 import './theme-default/lib/index.css'
 export default {
   name: 'MoEditor',
 
   components: {
     MoContentArea,
-    MoSelectBox
-    // 'mo-select-box': () => import('./areas/select-box')
+    'mo-select-box': () => import('./areas/block-select')
+  },
+
+  computed: {
+    showBlockSelect() {
+      return this.$editor ? this.$editor.state.showBlockSelect : false
+    }
   }
 }
 </script>

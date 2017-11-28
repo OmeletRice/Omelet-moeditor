@@ -20,6 +20,7 @@ export default {
       type: String,
       default: ''
     },
+    node: {},
     value: String
   },
 
@@ -48,7 +49,7 @@ export default {
       if (!this.editor) return ''
       return this.editor.getContent()
     },
-    createTinymce() {
+    createTinymce(selector) {
       const self = this
       let customOptions = this.options
       if (!customOptions) customOptions = {}
@@ -60,7 +61,8 @@ export default {
       const toolbar = customOptions.toolbar || TINYMCE_TOOLBAR
 
       let options = {
-        target: this.$refs.tinymcewrap,
+        selector: selector || this.node,
+        // target: this.node || this.$refs.tinymcewrap,
         theme: 'mobile',
         // language:
         branding: false,
@@ -89,8 +91,9 @@ export default {
 
   mounted() {
     // compa: ie suppore ?
-    this.$refs.tinymcewrap.innerHTML = this.content
-    this.createTinymce()
+    // this.$refs.tinymcewrap.innerHTML = this.content
+    // this.createTinymce()
+    this.$emit('mouted')
   },
 
   beforeDestroy() {

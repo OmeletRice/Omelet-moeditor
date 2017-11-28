@@ -12,12 +12,6 @@
 
 <script>
 import MoFloatingMenu from '@/components/floating-menu/floating-menu'
-// const INSERT_SCRIPT = `
-//   document.body.ontouchend = (evt) => {
-//     window.parent.editor.state.selectNode.event = evt
-//     window.parent.editor.state.selectNode.el = evt.target
-//   }
-// `
 const INSERT_SCRIPT = `
   if (document.addEventListener) {
     document.addEventListener('touchend', function(evt) {

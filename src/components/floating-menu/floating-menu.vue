@@ -34,7 +34,7 @@ export default {
   methods: {
     handleEdit(evt) {
       if (this.isMask) return
-      this.$editor.state.showSelectBox = true
+      this.$editor.state.showBlockSelect = true
     }
   }
 }

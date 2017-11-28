@@ -1,19 +1,20 @@
 <template>
-  <lazy-component class="mo-select-box-item__lazy-wrap" @show="handlerShowSelectItem">
-    <div class="mo-select-box-item"
-      :class="[
-        { 'is-active': isTouch }
-      ]"
-      @touchstart="handleTouchStart"
-      @touchend="handleTouchEnd">
-      <mo-tinymce-wrap ref="tinymce" v-if="isEnableTinymce" :content="nodeInfo.el ? nodeInfo.el.innerHTML : ''"></mo-tinymce-wrap>
-    </div>
-  </lazy-component>
+  <div class="mo-select-box-item"
+    :class="[
+      { 'is-active': isTouch }
+    ]"
+    @touchstart="handleTouchStart"
+    @touchend="handleTouchEnd">
+    <lazy-component class="mo-select-box-item__lazy-wrap" @show="handlerShowSelectItem">
+      <mo-tinymce-wrap ref="tinymce" v-if="isEnableTinymce" @mouted="handleMouted"></mo-tinymce-wrap>
+    </lazy-component>
+    <div ref="cloneNodePlace" class="mo-select-box-item__tinymce-holder"></div>
+  </div>
 </template>
 
 <script>
 import MoTinymceWrap from 'basis/tinymce/tinymce'
-const TINYMCE_BTN_CLASS_TAG = 'tinymce-mobile-mask-tap-icon'
+// const TINYMCE_BTN_CLASS_TAG = 'tinymce-mobile-mask-tap-icon'
 export default {
   name: 'MoSelectBoxItem',
 
@@ -45,28 +46,70 @@ export default {
 
   methods: {
     handleTouchStart(evt) {
-      if (evt.target && evt.target.className === TINYMCE_BTN_CLASS_TAG) {
-        this.$emit('openTinymceFrame')
-      }
-      if (evt.target) {
-        // this.isTouch = true
-        // console.log(evt)
-      }
+      // if (evt.target && evt.target.className === TINYMCE_BTN_CLASS_TAG) {
+      //   this.$emit('openTinymceFrame')
+      // }
+      // if (evt.target) {
+      //   this.isTouch = true
+      //   console.log(evt)
+      // }
       // console.log(this.editorVm.editor)
     },
     handleTouchEnd(evt) {
       // this.isTouch = false
     },
-    handlerShowSelectItem(val) {
-      // console.log('show', val)
-      // this.$refs.tinymce.createTinymce()
-      this.$emit('show')
+    getSelecterId() {
+      return this.$refs.cloneNodePlace ? `#${this.$refs.cloneNodePlace.id}` : null
+    },
+    handlerShowSelectItem() {
+      // alert('显示加载', this.getSelecterId())
+    },
+    createCloneNode(el, targetNode) {
+      if (!el || !targetNode) return
+      const id = this.getSelectedBlockId(el)
+      targetNode.setAttribute('id', id)
+      targetNode.append(el)
+      // alert('创建完node, id')
+    },
+    getSelectedBlockId(node) {
+      if (node.nodeType === 1) return node.getAttribute('moeditor-id')
+    },
+    handleMouted() {
+      const selectorId = this.getSelecterId()
+      // alert('tinymce mouted', this.$refs.tinymce)
+      this.$refs.tinymce.createTinymce(selectorId)
+    }
+  },
+
+  watch: {
+    nodeInfo: {
+      deep: true,
+      handler(node) {
+        if (node.el !== null) {
+          console.log(node, this.$refs.cloneNodePlace)
+          this.createCloneNode(node.el, this.$refs.cloneNodePlace)
+        }
+      }
     }
   }
 }
 </script>
 
 <style>
+.mo-select-box-item {
+  min-height: 180px;
+  margin-bottom: 20px;
+}
+
+.mo-select-box-item .mo-select-box-item__lazy-wrap {
+  min-height: 1px;
+}
+
+.mo-select-box-item .mo-select-box-item__tinymce-holder {
+  height: 180px;
+  box-shadow: 0 0 5px 1px #acacac;
+  border-radius: 5px;
+}
 
 .mo-select-box-item .tinymce-mobile-outer-container:not(.tinymce-mobile-fullscreen-maximized) .tinymce-mobile-editor-socket {
   height: 180px;

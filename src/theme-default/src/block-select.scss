@@ -1,0 +1,23 @@
+@import 'common/var';
+@import 'mixins/mixins';
+
+@include b(block-select) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
+  z-index: 100;
+
+  animation-duration: .5s;
+
+  @include e(header) {}
+
+  @include e(container) {
+    padding-top: 45px;
+    height: 100vh;
+    text-align: center;
+    overflow: hidden;
+  }
+}

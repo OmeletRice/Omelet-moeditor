@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import 'swiper/dist/css/swiper.css'
+// import 'swiper/dist/css/swiper.css'
 import Swiper from 'swiper'
 var browser = typeof window !== 'undefined'
 // if (browser) window.Swiper = require('swiper')

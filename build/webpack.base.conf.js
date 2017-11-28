@@ -78,6 +78,7 @@ module.exports = {
     ]
   },
   externals: {
-    tinymce: 'tinymce'
+    tinymce: 'tinymce',
+    swiper: 'Swiper'
   }
 }
