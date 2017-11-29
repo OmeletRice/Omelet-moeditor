@@ -30,12 +30,12 @@ export default {
     }
   },
 
-  watch: {
-    content(newVal) {
-      if (!this.editor) return
-      this.editor.setContent(newVal)
-    }
-  },
+  // watch: {
+  //   content(newVal) {
+  //     if (!this.editor) return
+  //     this.editor.setContent(newVal)
+  //   }
+  // },
 
   methods: {
     parent(vm) {
@@ -71,9 +71,9 @@ export default {
       }
 
       let setup = function(editor) {
-        editor.on('Change', function(e) {
-          self.$emit('change')
-          console.log('change')
+        editor.on('Blur', function(e) {
+          self.$emit('blur', self.getContent())
+          console.log('blur')
         })
         editor.on('init', function(e) {
           self.editor = this

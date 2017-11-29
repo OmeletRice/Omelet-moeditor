@@ -17,7 +17,8 @@ class BlockManager {
     return {
       id: this.getBlockId(node),
       type: this.getBlockType(node),
-      el: this.getBlockEl(node)
+      el: node,
+      newEl: this.getBlockEl(node)
     }
   }
 
@@ -64,16 +65,20 @@ class BlockManager {
   cloneChild(node) {
     let cloneNode = this.createCloneNode(node)
     const childrens = node.children
-    for (let i = 0, len = childrens.length; i < len; i++) {
-      // const _cloneChild = this.createCloneNode(childrens[i])
-      const _cloneChild = this.cloneChild(childrens[i])
-      cloneNode.append(_cloneChild)
+    if (childrens.length > 0) {
+      for (let i = 0, len = childrens.length; i < len; i++) {
+        // const _cloneChild = this.createCloneNode(childrens[i])
+        const _cloneChild = this.cloneChild(childrens[i])
+        cloneNode.append(_cloneChild)
+      }
+    } else {
+      cloneNode.textContent = node.textContent
     }
     return cloneNode
   }
-  createCloneNode(node) {
+  createCloneNode(node, deep = false) {
     const computedStyles = this.getElComputedStyles(node, this.styleList)
-    let cloneNode = node.cloneNode(false)
+    let cloneNode = node.cloneNode(deep)
     Object.keys(computedStyles).forEach(name => {
       cloneNode.style[name] = computedStyles[name]
     })

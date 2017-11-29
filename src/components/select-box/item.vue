@@ -5,7 +5,7 @@
     ]"
     @touchstart="handleTouchStart"
     @touchend="handleTouchEnd">
-    <lazy-component class="mo-select-box-item__lazy-wrap" @show="handlerShowSelectItem">
+    <lazy-component class="mo-select-box-item__lazy-wrap" ref="lazywrap" @show="handlerShowSelectItem">
       <mo-tinymce-wrap ref="tinymce" v-if="isEnableTinymce" @mouted="handleTinymceMouted"></mo-tinymce-wrap>
     </lazy-component>
     <div class="mo-select-box-item___modal" v-show="isLoading">
@@ -57,6 +57,7 @@ export default {
       }
       if (evt.target && hasClass(evt.target, TINYMCE_BTN_BACK_CLASS_TAG)) {
         this.isOpenEditFrame = false
+        this.handleContentChanged()
       }
     },
     handleTouchEnd(evt) {
@@ -66,14 +67,19 @@ export default {
       return this.$refs.cloneNodePlace ? `#${this.$refs.cloneNodePlace.id}` : null
     },
     handlerShowSelectItem() {
-      console.log('show', this.getSelecterId())
+      this.createCloneNode(this.nodeInfo.newEl, this.$refs.cloneNodePlace)
+      // console.log('show', this.getSelecterId())
     },
     createCloneNode(el, targetNode) {
       if (!el || !targetNode) return
       const id = this.getSelectedBlockId(el)
       targetNode.setAttribute('id', id)
       targetNode.append(el)
-      // alert('创建完node, id')
+      // console.log('创建完node, id', targetNode)
+      // if (this.editorVm === 'editorVM') {
+      //   // console.log(this.$refs.lazywrap)
+      //   this.$refs.lazywrap.load()
+      // }
     },
     getSelectedBlockId(node) {
       if (node.nodeType === 1) return node.getAttribute('moeditor-id')
@@ -82,22 +88,39 @@ export default {
       if (this.editorVm === 'editorVM') {
         this.$refs.tinymce.createTinymce(this.getSelecterId())
         this.isLoading = false
-        console.log('tinymce Mouted')
+        // console.log('tinymce Mouted')
       }
-    }
-  },
+    },
 
-  watch: {
-    nodeInfo: {
-      deep: true,
-      handler(node) {
-        if (node.el !== null) {
-          // console.log(node, this.$refs.cloneNodePlace)
-          this.createCloneNode(node.el, this.$refs.cloneNodePlace)
-        }
-      }
+    handleContentChanged() {
+      console.log(this.editorVm.editor)
+      const newContent = this.editorVm.editor.getContent()
+      const newNode = this.editorVm.editor.$(newContent)[0]
+      // const newNode = this.editorVm.editor.getBody().childNodes[0]
+      const oldNode = this.nodeInfo.el
+      console.log(newNode, oldNode)
+      oldNode.parentNode.replaceChild(newNode, oldNode)
+      // this.nodeInfo.el.parentNode.replaceChild(this.nodeInfo.el, newNode)
+    },
+    addToModifiedStack(node) {
+      // const el = this.nodeInfo.el
+      // el.parent.removeChild(el)
+      // debugger
+      // this.nodeInfo.el.replaceWith(node)
+      // this.nodeInfo.newEl.replaceWith(node)
     }
   }
+  // watch: {
+  //   nodeInfo: {
+  //     deep: true,
+  //     handler(node) {
+  //       if (node.newEl !== null) {
+  //         // console.log(node.newEl)
+  //         // this.createCloneNode(node.newEl, this.$refs.cloneNodePlace)
+  //       }
+  //     }
+  //   }
+  // }
 }
 </script>
 
@@ -134,6 +157,9 @@ export default {
 
 .mo-select-box-item .mo-select-box-item__lazy-wrap {
   /* min-height: 1px; */
+  height: 180px;
+  width: 100%;
+  position: absolute;
 }
 
 .mo-select-box-item .mo-select-box-item__tinymce-holder {

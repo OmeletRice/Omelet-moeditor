@@ -44,6 +44,17 @@ export default {
     }
   },
 
+  watch: {
+    '$editor.state.showBlockSelect': {
+      immediately: true,
+      handler(val) {
+        if (val === false) {
+          this.resetContent()
+        }
+      }
+    }
+  },
+
   methods: {
     handleScroll(scrollLen) {
       const selectedNodeEl = this.$editor.state.selectNode.el
@@ -70,6 +81,15 @@ export default {
       this.timeout = setTimeout(() => {
         this.maskMenu = false
       }, 500)
+    },
+    resetContent() {
+      this.position = {
+        left: '-5',
+        top: '-5',
+        height: '9999',
+        width: '9999'
+      }
+      this.showMenu = false
     }
   }
 }

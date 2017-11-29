@@ -6,9 +6,9 @@
     </keep-alive> -->
     <!-- </transition> -->
     <mo-content-area></mo-content-area>
-    <keep-alive>
-      <mo-select-box v-if="showBlockSelect"></mo-select-box>
-    </keep-alive>
+    <!-- <keep-alive> -->
+    <mo-select-box v-if="showBlockSelect"></mo-select-box>
+    <!-- </keep-alive> -->
   </div>
 </template>
 

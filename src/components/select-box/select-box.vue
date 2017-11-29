@@ -62,7 +62,7 @@ export default {
       // }
     },
     handleUpdateActiveBlock(block) {
-      console.log('handleUpdateActiveBlock', block)
+      // console.log('handleUpdateActiveBlock', block)
     }
   },
 
