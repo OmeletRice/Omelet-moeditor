@@ -3,12 +3,14 @@ import MoButton from './button/button'
 import MoIframeBox from './iframe-box/iframe-box'
 import MoIndicatorBox from './indicator-box/indicator-box'
 import MoHeader from './header/header'
+import MoSpinner from './spinner/spinner'
 
 const components = [
   MoButton,
   MoIframeBox,
   MoIndicatorBox,
-  MoHeader
+  MoHeader,
+  MoSpinner
 ]
 
 const install = function () {

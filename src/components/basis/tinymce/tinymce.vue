@@ -1,12 +1,12 @@
 <template>
-  <div draggable="false" class="mo-tinymce-wrap" ref="tinymcewrap">
-  </div>
+  <div draggable="false" class="mo-tinymce-wrap" ref="tinymcewrap"></div>
 </template>
 
 <script>
 import tinymce from 'tinymce'
 const TINYMCE_TOOLBAR = ['undo', 'redo', 'bold', 'italic', 'underline', 'fontsizeselect', 'forecolor', 'styleselect', 'removeformat']
 const TINTMCE_BASEURL = 'static/tinymce'
+// const TINYMCE_BTN_CLASS_TAG = 'tinymce-mobile-mask-tap-icon'
 // unused
 // plugins: ['autosave', 'lists', 'autolink']
 // toolbar: ['link', 'unlink', 'image', 'bullist', 'numlist']
@@ -78,9 +78,7 @@ export default {
         editor.on('init', function(e) {
           self.editor = this
           const parent = self.parent(self)
-          if (parent) {
-            parent.editorVm = self
-          }
+          if (parent) parent.editorVm = self
         })
       }
 

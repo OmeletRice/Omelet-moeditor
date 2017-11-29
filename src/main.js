@@ -1,7 +1,8 @@
 import Editor from './lib.js'
 
 let options = {
-  lang: 'en_US'
+  lang: 'en_US',
+  iframeSrc: 'static/mock-page/trans/index.html'
 }
 
 /* eslint-disable no-new */

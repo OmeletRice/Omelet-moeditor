@@ -1,6 +1,6 @@
 <template>
   <transition name="mo-slide-in-out" enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft"
-    @enter="handleEnter">
+    @before-enter="handleBeforeEnter">
     <div class="mo-block-select">
       <mo-header :title="$t('mo.selectbox.title')" fixed>
         <mo-button slot="left" icon="back" @click="handleBack">{{$t('mo.nav.btn.back')}}</mo-button>
@@ -40,9 +40,8 @@ export default {
     handleBack(evt) {
       this.state.showBlockSelect = false
     },
-    handleEnter(val) {
-      console.log('block-select: enter')
-      // 进入就开始计算点击元素的 block
+    handleBeforeEnter() {
+      console.log('handleBeforeEnter:')
       this.getSelectedBlock()
     },
     getSelectedBlockId(node) {
@@ -73,7 +72,7 @@ export default {
       // 最后获得一个 与之同样的 copy 节点
       if (node && node.el) {
         // old
-        const styleList = ['color', 'font-size', 'font-family']
+        const styleList = ['color', 'font-size', 'font-family', 'font-stlye', 'font-weight', 'line-height']
         const styles = this.getElementComputedStyle(node.el, styleList)
         let dupNode = node.el.cloneNode(true)
         Object.keys(styles).forEach((name) => {
@@ -101,7 +100,7 @@ export default {
         type: this.getSelectedBlockType(node),
         el: this.getSelectedBlockEl(node)
       }
-      console.log(this.activeBlock)
+      // console.log(this.activeBlock)
     }
   }
 }

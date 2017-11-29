@@ -10,6 +10,7 @@ import MoEditor from '@/editor'
 import Basis from '@/components/basis'
 // import routes from './router'
 import messages from './i18n/index.js'
+import BlockManager from 'engine/BlockManager'
 
 const EditorVue = Vue.extend(MoEditor)
 
@@ -47,6 +48,8 @@ const Editor = function(el, options) {
 
   self.options = options
   self.data = {}
+
+  self.blocks = new BlockManager(self);
 
   self.vm = new EditorVue({
     data: {

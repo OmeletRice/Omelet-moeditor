@@ -39,7 +39,7 @@ export default {
 
   data() {
     return {
-
+      activeBlockId: null
       // swiperOption: {
       //   notNextTick: true,
       //   initialSlide: 0,
@@ -60,6 +60,21 @@ export default {
       // if (this.$refs.mySwiper && this.$refs.mySwiper.swiper) {
       //   this.$refs.mySwiper.swiper.allowTouchMove = false
       // }
+    },
+    handleUpdateActiveBlock(block) {
+      console.log('handleUpdateActiveBlock', block)
+    }
+  },
+
+  watch: {
+    activeBlock: {
+      immediately: true,
+      deep: true,
+      handler(block) {
+        if (block && block.el) {
+          this.handleUpdateActiveBlock(block)
+        }
+      }
     }
   },
 
@@ -81,7 +96,7 @@ export default {
 .mo-select-box {
   padding: 20px;
   height: 100%;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 /* .mo-select-box__container .mo-select-box-item__lazy-wrap {
   height: 200px;
