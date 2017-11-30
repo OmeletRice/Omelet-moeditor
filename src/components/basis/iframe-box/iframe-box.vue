@@ -2,6 +2,7 @@
   <div class="mo-iframe-box" @scroll="throttleHandleScroll">
     <slot></slot>
     <iframe class="mo-iframe-box__inner"
+      :id="iframeId"
       :src="src" 
       :height="height" 
       :width="width" 
@@ -24,6 +25,10 @@ export default {
   name: 'MoIframeBox',
 
   props: {
+    iframeId: {
+      type: String,
+      default: 'iframe'
+    },
     src: {
       type: String,
       required: true

@@ -114,4 +114,6 @@ Editor.install = function() {
   Editor.installed = true
 }
 
+// console.log(Test)
+
 export default Editor

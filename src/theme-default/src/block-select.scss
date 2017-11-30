@@ -14,8 +14,16 @@
 
   @include e(header) {}
 
+  & .mo-header-button.is-left .mo-button {
+    width: 40px;
+    height: $--header-height;
+    color: $--color-white;
+    background-color: $--back-btn-background-color;
+    border-radius: 0;
+  }
+
   @include e(container) {
-    padding-top: 45px;
+    padding-top: $--header-height;
     height: 100vh;
     // text-align: center;
     overflow: hidden;

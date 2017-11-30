@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import SelectItem from '@/components/select-box/item'
+import SelectItem from '@/components/select-box/select-item'
 // import MoSwipeBox from 'basis/swipe-box/swipe-box'
 // import MoSwipeBoxItem from 'basis/swipe-box/swipe-item'
 export default {

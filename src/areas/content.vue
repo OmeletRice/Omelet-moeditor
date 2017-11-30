@@ -5,7 +5,8 @@
       :src="src" 
       :script-text="insertScript"
       @scroll="handleScroll" 
-      @position="handlePosition"></mo-iframe-box>
+      @position="handlePosition"
+      ref="iframebox"></mo-iframe-box>
     <mo-floating-menu v-show="showMenu" :is-mask="maskMenu"></mo-floating-menu>
   </div>
 </template>
@@ -35,7 +36,7 @@ export default {
 
   data () {
     return {
-      src: 'static/mock-page/trans/index.html',
+      src: this.$editor.options.iframeSrc,
       position: null,
       insertScript: INSERT_SCRIPT,
       showMenu: false,
@@ -83,11 +84,12 @@ export default {
       }, 500)
     },
     resetContent() {
+      const iframewarp = this.$refs.iframebox.$refs.iframewarp
       this.position = {
-        left: '-5',
-        top: '-5',
-        height: '9999',
-        width: '9999'
+        left: -5,
+        top: -5,
+        height: iframewarp ? iframewarp.offsetHeight + 10 : 9999,
+        width: iframewarp ? iframewarp.offsetWidth + 10 : 9999
       }
       this.showMenu = false
     }

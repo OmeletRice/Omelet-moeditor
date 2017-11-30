@@ -3,7 +3,7 @@
     @before-enter="handleBeforeEnter">
     <div class="mo-block-select">
       <mo-header :title="$t('mo.selectbox.title')" fixed>
-        <mo-button slot="left" icon="back" @click="handleBack">{{$t('mo.nav.btn.back')}}</mo-button>
+        <mo-button slot="left" icon="back" @click="handleBack"> < </mo-button>
       </mo-header>
       <div class="mo-block-select__container">
         <mo-select-box
@@ -43,7 +43,6 @@ export default {
     handleBeforeEnter() {
       // console.log('handleBeforeEnter:')
       this.activeBlock = this.$editor.blocks.getBlockInfo(this.state.selectNode.el)
-      // this.getSelectedBlock()
     }
   }
 }

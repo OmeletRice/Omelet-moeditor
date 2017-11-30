@@ -61,28 +61,19 @@ export default {
       }
     },
     handleTouchEnd(evt) {
-      // this.isTouch = false
     },
     getSelecterId() {
       return this.$refs.cloneNodePlace ? `#${this.$refs.cloneNodePlace.id}` : null
     },
     handlerShowSelectItem() {
-      this.createCloneNode(this.nodeInfo.newEl, this.$refs.cloneNodePlace)
+      this.createCloneNode(this.nodeInfo, this.$refs.cloneNodePlace)
       // console.log('show', this.getSelecterId())
     },
-    createCloneNode(el, targetNode) {
-      if (!el || !targetNode) return
-      const id = this.getSelectedBlockId(el)
-      targetNode.setAttribute('id', id)
-      targetNode.append(el)
-      // console.log('创建完node, id', targetNode)
-      // if (this.editorVm === 'editorVM') {
-      //   // console.log(this.$refs.lazywrap)
-      //   this.$refs.lazywrap.load()
-      // }
-    },
-    getSelectedBlockId(node) {
-      if (node.nodeType === 1) return node.getAttribute('moeditor-id')
+    createCloneNode(nodeInfo, targetNode) {
+      if (!nodeInfo.newEl || !targetNode) return
+      targetNode.setAttribute('id', nodeInfo.id)
+      targetNode.setAttribute('style', nodeInfo.parentElStyles.cssText)
+      targetNode.append(nodeInfo.newEl)
     },
     handleTinymceMouted() {
       if (this.editorVm === 'editorVM') {
@@ -93,34 +84,14 @@ export default {
     },
 
     handleContentChanged() {
-      console.log(this.editorVm.editor)
       const newContent = this.editorVm.editor.getContent()
       const newNode = this.editorVm.editor.$(newContent)[0]
-      // const newNode = this.editorVm.editor.getBody().childNodes[0]
+      newNode.setAttribute('moeditor-id', this.nodeInfo.id)
       const oldNode = this.nodeInfo.el
       console.log(newNode, oldNode)
       oldNode.parentNode.replaceChild(newNode, oldNode)
-      // this.nodeInfo.el.parentNode.replaceChild(this.nodeInfo.el, newNode)
-    },
-    addToModifiedStack(node) {
-      // const el = this.nodeInfo.el
-      // el.parent.removeChild(el)
-      // debugger
-      // this.nodeInfo.el.replaceWith(node)
-      // this.nodeInfo.newEl.replaceWith(node)
     }
   }
-  // watch: {
-  //   nodeInfo: {
-  //     deep: true,
-  //     handler(node) {
-  //       if (node.newEl !== null) {
-  //         // console.log(node.newEl)
-  //         // this.createCloneNode(node.newEl, this.$refs.cloneNodePlace)
-  //       }
-  //     }
-  //   }
-  // }
 }
 </script>
 
@@ -163,21 +134,22 @@ export default {
 }
 
 .mo-select-box-item .mo-select-box-item__tinymce-holder {
-  height: 180px;
+  height: 180px !important;
   display: block !important;
-  position: absolute;
-  padding: 20px 10px;
-  opacity: .4;
-  filter: blur(3px);
-  transition-delay: .5s;
-  transition-duration: .3s;
+  position: absolute !important;
+  padding: 20px 10px !important;
+  opacity: .4 !important;
+  filter: blur(3px) !important;
+  transition-delay: .5s !important;
+  transition-duration: .3s !important;
   /* box-shadow: 0 0 5px 1px #acacac;
   border-radius: 5px; */
 }
 
 .mo-select-box-item .mo-select-box-item__tinymce-holder.is-hide {
-  opacity: 0;
-  filter: blur(0.5);
+  opacity: 0 !important;
+  filter: blur(0.5px) !important;
+  padding: 20px 10px !important;
 }
 
 .mo-select-box-item .tinymce-mobile-outer-container:not(.tinymce-mobile-fullscreen-maximized) .tinymce-mobile-editor-socket {
